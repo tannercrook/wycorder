@@ -66,7 +66,7 @@ class _ResultPageState extends State<ResultPage>{
         Padding( 
           padding: EdgeInsets.all(10),
           child: AnimatedOpacity(
-            child:Text(_response, style: Theme.of(context).textTheme.headline3,),
+            child:Text(_response, style: Theme.of(context).textTheme.headline3.copyWith(color: Colors.white),),
             opacity: _visible,
             duration: Duration(seconds: 3),
             curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn)

@@ -26,6 +26,11 @@ class _ReadingPageState extends State<ReadingPage> {
     bool result = true;
     if (_formKey.currentState.validate()) {
       for (var check in switches.keys) {
+        if (double.parse(tempController.text.toString()) >= 99.0) {
+          if (double.parse(tempController.text.toString()) >= 100.4) {
+            result = false;
+          }
+        }
         if (switches[check] == true) {
           result = false;
         }
@@ -142,7 +147,7 @@ class _ReadingPageState extends State<ReadingPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
         tooltip: 'Save',
-        child: Icon(Icons.save),
+        child: Icon(Icons.check),
       ), // This trai
     );
   }
