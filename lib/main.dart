@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Tricorder'),
+      home: ReadingPage(title: 'Tricorder'),
     );
   }
 }
@@ -42,22 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            width: double.infinity,
-            height: 300,
-            child: Container( 
-              color: Colors.grey,
-            ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _takeReading,
-        tooltip: 'Check',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: ReadingPage()
     );
   }
 }
