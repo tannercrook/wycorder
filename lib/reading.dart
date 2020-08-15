@@ -24,20 +24,18 @@ class _ReadingPageState extends State<ReadingPage> {
 
   void _save() {
     bool result = true;
-    if (_formKey.currentState.validate()) {
-      for (var check in switches.keys) {
-        if (double.parse(tempController.text.toString()) >= 99.0) {
-          if (double.parse(tempController.text.toString()) >= 100.4) {
-            result = false;
-          }
-        }
-        if (switches[check] == true) {
-          result = false;
-        }
-      }
-      Navigator.push(context, MaterialPageRoute(builder: (contxt) => ResultPage(result: result, switches: switches,)));
+    double temp = 0.0;
+    temp = num.tryParse(tempController.text.toString())??0.0.toDouble();
+    if (temp >= 100.4) {
+      result = false;
     }
-    
+    for (var check in switches.keys) {
+      if (switches[check] == true) {
+        result = false;
+      }
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (contxt) => ResultPage(result: result, switches: switches,)));
+  
   }
 
   @override

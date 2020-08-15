@@ -33,7 +33,7 @@ class _ResultPageState extends State<ResultPage>{
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         _visible = 1.0;
-        _width = 500;
+        _width = 1000;
         _height = 1000;
         _radius = BorderRadius.zero;
         _child = Column(
