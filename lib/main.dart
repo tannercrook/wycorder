@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tricorder/DashboardView.dart';
+import 'package:flutter_tricorder/flutter_tricorder.dart';
 import 'package:tricorder/reading.dart';
 
 void main() => runApp(MyApp());
@@ -10,9 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tricorder',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
+        canvasColor: Colors.grey[300]
       ),
-      home: ReadingPage(title: 'Tricorder'),
+      home: MyHomePage(title: 'Tricorder'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -36,13 +40,19 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: Icon(Icons.person)
+          )
+        ],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30)
           )
         ),
       ),
-      body: ReadingPage()
+      body: DashboardView(status: 'Pass', connection: null, readings: FlutterTricorder.getTestData(),),
     );
   }
 }
