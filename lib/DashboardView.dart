@@ -88,39 +88,39 @@ class _DashboardViewState extends State<DashboardView> {
               },
             )
           ),
-          Container(
+          Container( 
             height: 35,
-            decoration: BoxDecoration( 
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10), ),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: OverflowBox(
-              maxHeight: 150,
-              minHeight: 80,
-              child: Container(
-                alignment: Alignment.topCenter,
-                height: 90,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50)
-                ),
-                child: FlatButton(
-                  color: Colors.grey[700],
-                  shape: CircleBorder(),
-                  child: Icon(Icons.add, size: 60, color: Colors.white,),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ReadingPage(title: 'New Screening')),
-                    );
-                  },
-                ),
-              ),
-            ),
+            color: Colors.transparent,
           )
         ],
       ),
-      
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: 35,
+          decoration: BoxDecoration( 
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10), ),
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        )
+      ),
+      Align( 
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 4),
+          child: FlatButton(
+          color: Colors.grey[700],
+          shape: CircleBorder(),
+          child: Icon(Icons.add, size: 60, color: Colors.white,),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReadingPage(title: 'New Screening')),
+            );
+          },
+        ),
+        )
+      ),
       ]
     );
   }
