@@ -1,8 +1,8 @@
 import 'Reading.dart';
 
-class FlutterTricorder {
+class FlutterWycorder {
 
-  FlutterTricorder();
+  FlutterWycorder();
 
   static List<Reading> getTestData() {
     List<Reading> testingList = [];

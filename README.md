@@ -1,16 +1,18 @@
-# tricorder
+# Wycorder
 
-A new Flutter project.
+This is a project designed to help people self-scan during COVID. It specifically is focused at Wyoming high school athletes.
 
-## Getting Started
+Currently the project is being designed for mobile. First, it will be local device only. Later, database resources and API server will be publicly available to use if you wish to aggregate data. *NOTE: I am doing this to protect student data. I suspect that these systems should not be publicly available and the app is being designed as such.*
 
-This project is a starting point for a Flutter application.
+## Privacy
 
-A few resources to get you started if this is your first Flutter project:
+### Mobile
+This app is being designed in a way that users have complete control over their data. It will not send data anywhere except where the user specifies. They do not need to specify a location. You can also use the app standalone and not have any connection.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Web (Planned)
+A web version is planned but not yet started.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Since persistence is not possible on the web without database, if you want the web version you will need to make modifications to the code and then compile for web. 
+
+
+

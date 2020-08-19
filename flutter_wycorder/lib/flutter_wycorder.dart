@@ -1,2 +1,2 @@
 export 'src/Reading.dart';
-export 'src/FlutterTricorder.dart';
+export 'src/FlutterWycorder.dart';
