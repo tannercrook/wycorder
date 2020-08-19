@@ -13,7 +13,7 @@ CREATE TABLE system_user
 , token 			VARCHAR(250)
 , password			VARCHAR(250)
 , active 			INTEGER			NOT NULL DEFAULT 1
-, created_at		TIMESTAMP WITH TIME ZONE );
+, created_at		TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP);
 
 
 CREATE UNIQUE INDEX system_user_uq_1 ON system_user (email);
@@ -23,7 +23,7 @@ CREATE UNIQUE INDEX system_user_uq_2 ON system_user (sis_id);
 CREATE TABLE reading 
 ( reading_id 		INTEGER 		PRIMARY KEY 	GENERATED ALWAYS AS IDENTITY 
 , system_user_id	INTEGER			NOT NULL 
-, time_taken 		TIMESTAMP WITH TIME ZONE 		NOT NULL 
+, time_taken 		TIMESTAMP WITH TIME ZONE 		NOT NULL    DEFAULT CURRENT_TIMESTAMP
 , status 			VARCHAR(10) 
 , fever_chills		SMALLINT 
 , cough				SMALLINT
