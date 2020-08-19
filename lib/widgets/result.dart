@@ -9,8 +9,8 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage>{
-  var fgColor = Colors.greenAccent;
-  var bgColor = Colors.green;
+  Color fgColor = Colors.greenAccent;
+  Color bgColor = Colors.green[300];
 
   Widget _child = Center(child: Icon(Icons.error, size: 100,));
   double _height = 250;
@@ -56,7 +56,7 @@ class _ResultPageState extends State<ResultPage>{
   Widget build(BuildContext context) {
     if (!this.widget.result) {
       fgColor = Colors.redAccent;
-      bgColor = Colors.red;
+      bgColor = Colors.red[300];
       _icon = Icons.error;
       _response = "Please quarantine.";
     }

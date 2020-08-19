@@ -1,5 +1,5 @@
-name: flutter_tricorder
-description: A custom package to handle Tricorder API
+name: flutter_wycorder
+description: A custom package to handle Wycorder API
 
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

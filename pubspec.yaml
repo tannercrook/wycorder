@@ -20,8 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.16.1
-  flutter_tricorder: 
-    path: ./flutter_tricorder
+  flutter_wycorder: 
+    path: ./flutter_wycorder
 
 
   # The following adds the Cupertino Icons font to your application.

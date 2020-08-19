@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tricorder/DashboardView.dart';
-import 'package:flutter_tricorder/flutter_tricorder.dart';
+import 'package:flutter_wycorder/flutter_wycorder.dart';
 import 'package:tricorder/reading.dart';
 
 void main() => runApp(MyApp());
@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tricorder',
+      title: 'Wycorder',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
         canvasColor: Colors.grey[300]
       ),
-      home: MyHomePage(title: 'Tricorder'),
+      home: MyHomePage(title: 'Wycorder'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ),
       ),
-      body: DashboardView(status: 'Pass', connection: null, readings: FlutterTricorder.getTestData(),),
+      body: DashboardView(status: 'Fail', connection: 'LCSD#2', readings: FlutterWycorder.getTestData(),),
     );
   }
 }

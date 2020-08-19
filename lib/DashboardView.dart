@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tricorder/reading.dart';
 import 'package:tricorder/widgets/ReadingTile.dart';
-import 'package:flutter_tricorder/flutter_tricorder.dart';
+import 'package:flutter_wycorder/flutter_wycorder.dart';
 
 
 class DashboardView extends StatefulWidget {
@@ -153,7 +153,7 @@ class _DashboardViewState extends State<DashboardView> {
       this.connectionIcon = Icons.power;
       this.connectionStatus = this.widget.connection;
     } else {
-      this.connectionIcon = Icons.power_off;
+      this.connectionIcon = Icons.power;
       this.connectionStatus = 'Not connected';
     }
 
