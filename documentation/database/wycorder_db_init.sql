@@ -9,7 +9,7 @@ DROP TABLE system_user;
 CREATE TABLE system_user 
 ( system_user_id 	INTEGER		PRIMARY KEY 	GENERATED ALWAYS AS IDENTITY
 , email 			VARCHAR(80)
-, sis_id 			INTEGER
+, sis_id 			VARCHAR(50)
 , token 			VARCHAR(250)
 , password			VARCHAR(250)
 , active 			INTEGER			NOT NULL DEFAULT 1
