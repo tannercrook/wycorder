@@ -1,5 +1,3 @@
-import 'package:http/http.dart';
-
 import 'Reading.dart';
 import 'SystemUser.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +13,7 @@ class FlutterWycorder {
 
   // Functions
 
+  // login
   Future<SystemUser> authenticate(String username, String password) async {
     var body = json.encode({
       'username':username, 
@@ -50,7 +49,6 @@ class FlutterWycorder {
 
 
   Future<List<Reading>> fetchReadings() async {
-
     final response = await http.get(this.baseURL+'/reading/', headers: {'token':this.token});
     if (response.statusCode == 200) {
       List<Reading> readings = (json.decode(response.body) as List).map((e) => Reading.fromJson(e)).toList();
@@ -61,6 +59,17 @@ class FlutterWycorder {
     } else {
       print('Error fetching data');
       throw Exception('Error fetching data');
+    }
+  }
+
+  // Add a reading to the database
+  Future<bool> putReading(Reading reading) async {
+    var body = reading.toJson();
+    final response = await http.put(this.baseURL+'/reading/', headers: {'token':this.token, 'content_type':'application/json'}, body: body);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 

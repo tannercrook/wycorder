@@ -84,7 +84,7 @@ class _DashboardViewState extends State<DashboardView> {
               shrinkWrap: true,
               itemCount: this.widget.readings.length,
               itemBuilder: (context, index) {
-                return ReadingTile(timeTaken: this.widget.readings[index].timeTaken, status: this.widget.readings[index].status,);
+                return ReadingTile(timeTaken: this.widget.readings[index].time_taken, status: this.widget.readings[index].status,);
               },
             )
           ),
