@@ -1,6 +1,7 @@
 import 'Reading.dart';
 import 'SystemUser.dart';
 import 'package:http/http.dart' as http;
+import 'dart:io';
 import 'dart:convert';
 
 class FlutterWycorder {
@@ -15,11 +16,8 @@ class FlutterWycorder {
 
   // login
   Future<SystemUser> authenticate(String username, String password) async {
-    var body = json.encode({
-      'username':username, 
-      'password':password,
-    });
-    final response = await http.post(this.baseURL+'/auth', headers: {'content_type':'application/json'}, body: body);
+    Map body = {"username":username, "password":password};
+    final response = await http.post(this.baseURL+'/system_user/auth', headers: {HttpHeaders.contentTypeHeader: "application/json",}, body: JsonEncoder().convert(body));
     if (response.statusCode == 200) {
       SystemUser user = SystemUser.fromJson(json.decode(response.body));
       return user;
@@ -28,6 +26,8 @@ class FlutterWycorder {
       throw Exception('Access Denied');
     } else {
       print('Error fetching data');
+      print(body.toString());
+      print(this.baseURL+'/system_user/auth'+' '+response.statusCode.toString());
       throw Exception('Error fetching data');
     }
   }

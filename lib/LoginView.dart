@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wycorder/flutter_wycorder.dart';
+import 'package:tricorder/main.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'globals.dart' as globals;
 
 class LoginView extends StatefulWidget {
   final String baseURL;
@@ -14,6 +17,7 @@ class _LoginViewState extends State<LoginView> {
   bool _submitIsDisabled = false;
   @override
   Widget build(BuildContext context) {
+    _initPrefs();
     return Scaffold(
       body: Column(
         children: [
@@ -50,8 +54,7 @@ class _LoginViewState extends State<LoginView> {
                     Container( 
                       child: RaisedButton(
                         child: Text('Login'),
-                        onPressed: checkDisabled() ? null : () {
-                          this._submitIsDisabled = true;
+                        onPressed: () {
                           this._submit();
                         },
                       )
@@ -82,7 +85,9 @@ class _LoginViewState extends State<LoginView> {
     connection.authenticate(this._data.username, this._data.password).then((value) {
       user = value;
       if (user.system_user_id != null) {
-        Navigator.of(context).pop(user);
+        globals.user = user;
+        globals.preferences.setString('token', globals.user.token);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'Wycorder')));
       } else {
         // Something went wrong
         setState(() {
@@ -91,6 +96,11 @@ class _LoginViewState extends State<LoginView> {
       }
     }).catchError((err) => print(err));
   }
+
+  Future<bool> _initPrefs() async {
+    globals.preferences = await StreamingSharedPreferences.instance;
+  }
+
 }
 
 

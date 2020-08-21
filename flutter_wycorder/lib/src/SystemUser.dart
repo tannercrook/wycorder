@@ -31,7 +31,7 @@ class SystemUser {
       token:json['token'],
       password:json['password'],
       active:json['active'],
-      created_at:json['created_at']
+      created_at: DateTime.parse(json['created_at'])
     );
   }
 

@@ -1,4 +1,6 @@
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:flutter_wycorder/flutter_wycorder.dart';
 
 StreamingSharedPreferences preferences;
-String apiBaseURL = 'http://localhost:5000/api/v1';
+String apiBaseURL = 'https://wycorder.crooktec.com/api/v1';
+SystemUser user = SystemUser();
