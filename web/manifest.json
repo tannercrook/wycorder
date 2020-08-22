@@ -1,6 +1,6 @@
 {
-    "name": "tricorder",
-    "short_name": "tricorder",
+    "name": "wycorder",
+    "short_name": "wycorder",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

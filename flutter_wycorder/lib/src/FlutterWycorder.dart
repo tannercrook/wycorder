@@ -17,7 +17,7 @@ class FlutterWycorder {
   // login
   Future<SystemUser> authenticate(String username, String password) async {
     Map body = {"username":username, "password":password};
-    final response = await http.post(this.baseURL+'/system_user/auth', headers: {HttpHeaders.contentTypeHeader: "application/json",}, body: JsonEncoder().convert(body));
+    final response = await http.post(this.baseURL+'/system_user/auth', headers: {HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",}, body: body);
     if (response.statusCode == 200) {
       SystemUser user = SystemUser.fromJson(json.decode(response.body));
       return user;
@@ -34,7 +34,7 @@ class FlutterWycorder {
 
 
   Future<SystemUser> getUser() async {
-    final response = await http.get(this.baseURL+'/system_user/', headers: {'token':this.token});
+    final response = await http.get(this.baseURL+'/system_user/', headers: {HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",'token':this.token});
     if (response.statusCode == 200) {
       SystemUser user = SystemUser.fromJson(json.decode(response.body));
       return user;
@@ -65,7 +65,7 @@ class FlutterWycorder {
   // Add a reading to the database
   Future<bool> putReading(Reading reading) async {
     var body = reading.toJson();
-    final response = await http.put(this.baseURL+'/reading/', headers: {'token':this.token, 'content_type':'application/json'}, body: body);
+    final response = await http.put(this.baseURL+'/reading/', headers: {'token':this.token, HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",}, body: body);
     if (response.statusCode == 200) {
       return true;
     } else {

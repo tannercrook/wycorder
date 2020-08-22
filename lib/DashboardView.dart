@@ -1,163 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:tricorder/reading.dart';
-import 'package:tricorder/widgets/ReadingTile.dart';
+import 'package:wycorder/widgets/Dashboard.dart';
 import 'package:flutter_wycorder/flutter_wycorder.dart';
-
+import 'globals.dart' as globals;
 
 class DashboardView extends StatefulWidget {
-  DashboardView({Key key, this.status, this.connection, this.readings}) : super(key: key);
-
-  final String status;
-  final String connection;
-  final List<Reading> readings;
-
+  DashboardView({Key key, this.title, this.user}) : super(key: key);
+  final String title;
+  final SystemUser user;
   @override
   _DashboardViewState createState() => _DashboardViewState();
 }
 
+
 class _DashboardViewState extends State<DashboardView> {
 
-  Color statusColor = Colors.teal;
-  IconData statusIcon = Icons.check;
-  IconData connectionIcon = Icons.power;
-  String connectionStatus = 'Connected';
 
   @override
   Widget build(BuildContext context) {
-    _preInit();
-    return Stack(
-      children: [Column(
-        children: [
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: this.statusColor,
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: Column( 
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Current Status", style: Theme.of(context).textTheme.headline6),
-                      Icon(this.statusIcon, size: 60),
-                      Text(this.widget.status, style: Theme.of(context).textTheme.headline6),
-                    ]
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(15)
-                  ),
-                  child: Column( 
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Connection", style: Theme.of(context).textTheme.headline6),
-                      Icon(this.connectionIcon, size: 60),
-                      Text(this.connectionStatus, style: Theme.of(context).textTheme.headline6),
-                    ]
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: this.widget.readings.length,
-              itemBuilder: (context, index) {
-                return ReadingTile(timeTaken: this.widget.readings[index].time_taken, status: this.widget.readings[index].status,);
-              },
+    if (globals.addedNewReading) {
+      setState(() {
+        print('Set State');
+      });
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: Icon(Icons.person)
+            )
+          ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(30)
             )
           ),
-          Container( 
-            height: 35,
-            color: Colors.transparent,
-          )
-        ],
-      ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 35,
-          decoration: BoxDecoration( 
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10), ),
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        )
-      ),
-      Align( 
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 4),
-          child: FlatButton(
-          color: Colors.grey[700],
-          shape: CircleBorder(),
-          child: Icon(Icons.add, size: 60, color: Colors.white,),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ReadingPage(title: 'New Screening')),
-            );
-          },
         ),
+        body: FutureBuilder<List<Reading>>(
+          future: FlutterWycorder(globals.apiBaseURL, token: this.widget.user.token).fetchReadings(),
+          builder: (BuildContext context, AsyncSnapshot<List<Reading>> snapshot) {
+            String latestStatus;
+            if (snapshot.hasData) {
+              if (snapshot.data.length > 0) {
+                latestStatus = snapshot.data[0].status;
+              } else {
+                latestStatus = 'Pass';
+              }
+              return Dashboard(status: latestStatus, connection: 'Wycorder', readings: snapshot.data, user: this.widget.user, parent: this,);
+            } else if (snapshot.hasError) {
+              print(snapshot.error);
+              return Text('Error Loading. Restart the application.');
+            } else {
+              return Container( 
+                child: CircularProgressIndicator(),
+                height: 60,
+                width: 60,
+              );
+            }
+          },
         )
-      ),
-      ]
-    );
+      );
   }
-
-  void _preInit() {
-    switch (this.widget.status) {
-      case 'Pass': {
-        this.statusColor = Colors.green[300];
-        this.statusIcon = Icons.check;
-      }
-      break;
-      case 'Warn': {
-        this.statusColor = Colors.amber[300];
-        this.statusIcon = Icons.warning;
-      }
-      break;
-      case 'Fail': {
-        this.statusColor = Colors.red[300];
-        this.statusIcon = Icons.error;
-      }
-      break;
-      default: {
-        this.statusColor = Colors.grey;
-        this.statusIcon = Icons.error;
-      }
-    }
-
-    // Connection
-    if (this.widget.connection != null) {
-      this.connectionIcon = Icons.power;
-      this.connectionStatus = this.widget.connection;
-    } else {
-      this.connectionIcon = Icons.power;
-      this.connectionStatus = 'Not connected';
-    }
-
-  }
-
-
 }
+
+//  Dashboard(status: 'Pass', connection: null, readings: FlutterWycorder.getTestData(),),

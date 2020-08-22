@@ -1,4 +1,4 @@
-package com.example.tricorder
+package com.example.wycorder
 
 import io.flutter.embedding.android.FlutterActivity
 

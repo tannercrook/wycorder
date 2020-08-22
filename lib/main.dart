@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tricorder/DashboardView.dart';
+import 'package:wycorder/widgets/Dashboard.dart';
 import 'package:flutter_wycorder/flutter_wycorder.dart';
-import 'package:tricorder/LoginView.dart';
-import 'package:tricorder/reading.dart';
+import 'package:wycorder/LoginView.dart';
+import 'package:wycorder/reading.dart';
 
 
 import 'globals.dart' as globals;
 
 void main() => runApp(MyApp());
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -42,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget loginView = LoginView(baseURL: globals.apiBaseURL,);
-    Widget dashboard = DashboardView(status: 'Fail', connection: null, readings: FlutterWycorder.getTestData(),);
+    Widget dashboard = Dashboard(status: 'Fail', connection: null, readings: FlutterWycorder.getTestData(),);
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
@@ -58,17 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ),
         ),
-        body: dashboard,
+        body: loginView,
       );
   }
 
-  @override 
-  void initState() {
-    super.initState();
-    if (globals.user.token == null) {
-      _loginAndReturn(context);
-    }
-  }
 
   _loginAndReturn(BuildContext context) async {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginView(baseURL: globals.apiBaseURL)));

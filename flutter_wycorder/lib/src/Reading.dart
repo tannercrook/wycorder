@@ -43,7 +43,7 @@ class Reading {
     return Reading(
       readingID: json['readingID'],
       system_user_id: json['system_user_id'],
-      time_taken: json['time_taken'],
+      time_taken: DateTime.parse(json['time_taken']),
       status: json['status'],
       fever_chills: json['fever_chills'],
       cough: json['cough'], 
@@ -60,20 +60,20 @@ class Reading {
   }
 
   Map<String, dynamic> toJson() => {
-    'system_user_id':this.system_user_id,
-    'time_taken':this.time_taken,
+    'system_user_id':this.system_user_id.toString(),
+    'time_taken':this.time_taken.toString(),
     'status':this.status,
-    'fever_chills':this.fever_chills,
-    'cough':this.cough,
-    'sore_throat':this.sore_throat,
-    'short_breath':this.short_breath,
-    'fatigue':this.fatigue,
-    'aches':this.aches,
-    'taste_loss':this.taste_loss,
-    'congestion':this.congestion,
-    'nausea_vomit_diarrhea':this.nausea_vomit_diarrhea,
-    'infectious_contact':this.infectious_contact,
-    'temperature':this.temperature
+    'fever_chills':this.fever_chills.toString(),
+    'cough':this.cough.toString(),
+    'sore_throat':this.sore_throat.toString(),
+    'short_breath':this.short_breath.toString(),
+    'fatigue':this.fatigue.toString(),
+    'aches':this.aches.toString(),
+    'taste_loss':this.taste_loss.toString(),
+    'congestion':this.congestion.toString(),
+    'nausea_vomit_diarrhea':this.nausea_vomit_diarrhea.toString(),
+    'infectious_contact':this.infectious_contact.toString(),
+    'temperature':this.temperature.toString()
   };
 
 

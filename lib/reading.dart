@@ -1,42 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:tricorder/widgets/result.dart';
+import 'package:flutter_wycorder/flutter_wycorder.dart';
+import 'package:wycorder/widgets/result.dart';
+import 'globals.dart' as globals;
 
 
 
 class ReadingPage extends StatefulWidget {
-  ReadingPage({Key key, this.title}) : super(key: key);
+  ReadingPage({Key key, this.title, this.user}) : super(key: key);
   final String title;
+  final SystemUser user;
   @override
   _ReadingPageState createState() => _ReadingPageState();
 }
 
-class _ReadingPageState extends State<ReadingPage> {
-  var switches = {
-    'breath':false,
-    'cough':false,
-    'smellTaste':false,
-    'tiredness':false,
-    'exposure':false,
-  };
+class _ReadingPageState extends State<ReadingPage> with RouteAware{
+  List<SwitchItem> switches = [
+    SwitchItem(name: 'fever_chills', label: 'Fever/Chills', value: false),
+    SwitchItem(name: 'cough', label: 'Cough', value: false),
+    SwitchItem(name: 'sore_throat', label: 'Sore Throat', value: false),
+    SwitchItem(name: 'short_breath', label: 'Shortness of Breath', value: false),
+    SwitchItem(name: 'fatigue', label: 'Fatigue', value: false),
+    SwitchItem(name: 'aches', label: 'Head/Muscle/Body Aches', value: false),
+    SwitchItem(name: 'taste_loss', label: 'Loss of Taste/Smell', value: false),
+    SwitchItem(name: 'congestion', label: 'Congestion/Runny Nose', value: false),
+    SwitchItem(name: 'nausea_vomit_diarrhea', label: 'Nausea/Vomitting/Diarrhea', value: false),
+    SwitchItem(name: 'infectious_contact', label: 'Close contact to COVID-19', value: false),
+    SwitchItem(name: 'temperature', label: 'Temperature Above 100.4', value: false),
+  ];
+  Map<String, int> switchMap = {'finished': 1};
   double temperature;
   final tempController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  int _boolToInt(bool b) {
+    if (b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   void _save() {
     bool result = true;
-    double temp = 0.0;
-    temp = num.tryParse(tempController.text.toString())??0.0.toDouble();
-    if (temp >= 100.4) {
-      result = false;
-    }
-    for (var check in switches.keys) {
-      if (switches[check] == true) {
+    for (var item in switches) {
+      switchMap[item.name] = _boolToInt(item.value);
+      if (item.value == true) {
         result = false;
       }
     }
-    Navigator.push(context, MaterialPageRoute(builder: (contxt) => ResultPage(result: result, switches: switches,)));
+    String status;
+    if (result) {
+      status = 'Pass';
+    } else {
+      status = 'Fail';
+    }
+    Reading reading = Reading(
+      readingID: null,
+      system_user_id: this.widget.user.system_user_id,
+      status: status,
+      fever_chills: switchMap['fever_chills'],
+      cough: switchMap['cough'], 
+      sore_throat: switchMap['sore_throat'],
+      short_breath: switchMap['short_breath'],
+      fatigue: switchMap['fatigue'],
+      aches: switchMap['aches'],
+      taste_loss: switchMap['taste_loss'],
+      congestion: switchMap['congestion'],
+      nausea_vomit_diarrhea: switchMap['nausea_vomit_diarrhea'],
+      infectious_contact: switchMap['infectious_contact'],
+      temperature: switchMap['temperature'],
+    );
+    FlutterWycorder(globals.apiBaseURL, token: this.widget.user.token).putReading(reading);
+    globals.addedNewReading = true;
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (contxt) => ResultPage(result: result, switches: null,)));
   
   }
+
 
   @override
   void dispose() {
@@ -55,92 +95,22 @@ class _ReadingPageState extends State<ReadingPage> {
           )
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text("Self Screening", style: Theme.of(context).textTheme.headline2,),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Text("Please fill out the information accurately.", style: Theme.of(context).textTheme.subtitle1,),
-            ),
-            Divider(),
-            Padding(
-              padding: EdgeInsets.only(left: 10, top: 20),
-              child: Text("Toggle any of the following that you are experiencing.", style: Theme.of(context).textTheme.subtitle1,),
-            ),
-            ListTile(
-              leading: Switch( 
-                value: switches['breath'],
-                onChanged: (value) {
-                  setState((){
-                    switches['breath'] = value;
-                  });
-                },
-              ),
-              title: Text("Shortness of breath"),
-            ),
-            ListTile(
-              leading: Switch( 
-                value: switches['cough'],
-                onChanged: (value) {
-                  setState((){
-                    switches['cough'] = value;
-                  });
-                },
-              ),
-              title: Text("Coughing"),
-            ),
-            ListTile(
-              leading: Switch( 
-                value: switches['smellTaste'],
-                onChanged: (value) {
-                  setState((){
-                    switches['smellTaste'] = value;
-                  });
-                },
-              ),
-              title: Text("Loss of smell and/or taste"),
-            ),
-            ListTile(
-              leading: Switch( 
-                value: switches['tiredness'],
-                onChanged: (value) {
-                  setState((){
-                    switches['tiredness'] = value;
-                  });
-                },
-              ),
-              title: Text("Unusual Tiredness"),
-            ),
-            ListTile(
-              leading: Switch( 
-                value: switches['exposure'],
-                onChanged: (value) {
-                  setState((){
-                    switches['exposure'] = value;
-                  });
-                },
-              ),
-              title: Text("Exposure"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20, left: 30),
-              child: TextField(
-                key: Key('tempField'),
-                controller: tempController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration( 
-                  icon: Icon(Icons.healing),
-                  labelText: "Temperature"
-                  ),
-              ),
-            ),
-          ],
-        ),
+      body: Column(  
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 10, top: 5),
+            child: Text("Toggle any of the following that you are experiencing.", style: Theme.of(context).textTheme.subtitle1,),
+          ),
+          Divider(),   
+          Expanded(
+            child:ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: AlwaysScrollableScrollPhysics(),
+              children: makeToggles(),
+            )
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _save,
@@ -149,4 +119,34 @@ class _ReadingPageState extends State<ReadingPage> {
       ), // This trai
     );
   }
+
+  List<Widget> makeToggles() {
+    List<Widget> toggles =[];
+    for (var item in this.switches) {
+      toggles.add(ListTile(
+      leading: Switch( 
+        value: item.value,
+        onChanged: (value) {
+          setState((){
+            item.value = value;
+          });
+        },
+      ),
+      title: Text(item.label),
+    ));
+    }
+    return toggles;
+  }
+
+}
+
+
+class SwitchItem {
+  String name;
+  String label;
+  bool value;
+  Widget toggle;
+
+  SwitchItem({this.name, this.label, this.value, this.toggle});
+
 }
