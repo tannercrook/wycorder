@@ -29,7 +29,7 @@ class ReadingTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(DateFormat('MM/dd/yyyy HH:mm').format(this.timeTaken.toLocal()), style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 17),),
+            Text(DateFormat('MM/dd/yyyy h:mm a').format(this.timeTaken.toLocal()), style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 17),),
             Container( 
               width: 60,
               alignment: Alignment.center,

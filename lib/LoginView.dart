@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wycorder/flutter_wycorder.dart';
 import 'package:wycorder/DashboardView.dart';
 import 'package:wycorder/main.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'globals.dart' as globals;
 
 class LoginView extends StatefulWidget {
@@ -93,7 +92,6 @@ class _LoginViewState extends State<LoginView> {
       user = value;
       if (user.system_user_id != null) {
         globals.user = user;
-        globals.preferences.setString('token', globals.user.token);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardView(title: 'Dashboard', user: user)));
       } else {
         // Something went wrong
@@ -106,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Future<bool> _initPrefs() async {
-    globals.preferences = await StreamingSharedPreferences.instance;
+    //globals.preferences = await StreamingSharedPreferences.instance;
   }
 
 }

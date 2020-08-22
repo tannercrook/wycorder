@@ -55,8 +55,6 @@ class Dashboard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
-                  width: 250,
-                  height: 250,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Colors.grey,
