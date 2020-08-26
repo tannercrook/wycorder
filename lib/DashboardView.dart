@@ -28,7 +28,14 @@ class _DashboardViewState extends State<DashboardView> {
           actions: [
             Padding(
               padding: EdgeInsets.only(right: 20),
-              child: Icon(Icons.person)
+              child: IconButton(
+                icon: Icon(Icons.sync),
+                onPressed: () {
+                  setState(() {
+                    
+                  });
+                },
+              )
             )
           ],
           shape: RoundedRectangleBorder(

@@ -26,15 +26,14 @@ class Dashboard extends StatelessWidget {
     return Stack(
       children: [Column(
         children: [
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
+          ConstrainedBox( 
+            constraints: BoxConstraints(maxHeight: 250, ),
+            child: Row(
             children: [
-              Padding(
+              Expanded(
+                child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
-                  width: 250,
-                  height: 250,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: this.statusColor,
@@ -52,7 +51,9 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+              ),
+              Expanded(
+                child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
                   padding: EdgeInsets.all(20),
@@ -72,7 +73,9 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
               ),
+              ),
             ],
+          ),
           ),
           Expanded(
             flex: 1,
