@@ -1,6 +1,8 @@
 # WYcorder
 WYcorder is a Flutter app and API that was built to help schools in Wyoming (or beyond) track COVID. Specifically it adheres to the guidelines set by the WHSAA for student athletes. 
 
+![Screenshot](/flutter/screenshots/screenshot1.png?raw=true "Screenshot")
+
 WYcorder was built with security in mind, so you can anonymize data as much as you would like. You also can host your own server (possibly internal only) to additionally safeguard data.
 
 ## Project Structure
