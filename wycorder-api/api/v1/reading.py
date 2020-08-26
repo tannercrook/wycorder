@@ -44,8 +44,9 @@ def post():
         data = request.form
         reading = Reading()
         reading.system_user_id = user.system_user_id 
-        reading.time_taken = data['time_taken']
-        status = data['status']
+        # Null for time_take (we will let the database handle it)
+        #reading.time_taken = data['time_taken']
+        reading.status = data['status']
         reading.fever_chills = data['fever_chills']
         reading.cough = data['cough']
         reading.sore_throat = data['sore_throat']
