@@ -1,0 +1,14 @@
+name: flutter_wycorder
+description: A custom package to handle Wycorder API
+
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 0.1.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  http: ^0.12.2
