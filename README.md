@@ -11,7 +11,7 @@ The project consists of two main directories. The first is the Flutter directory
 ## Installation
 
 ### Flutter
-To compile for the flutter apps, follow the instructions on flutter.dev to get set up. Once you are ready, simply run `flutter build web` to compile for release or `flutter run -d linux` to run in debug mode (replacing the last parameter) for the device you want to compile for. There is a lot of documentation on flutter.dev about this.
+To compile for the flutter apps, follow the instructions on flutter.dev to get set up. Once you are ready you will need to set the base URL for the API in flutter/lib/globals.dart. Then simply run `flutter build web` to compile for release or `flutter run -d linux` to run in debug mode (replacing the last parameter) for the device you want to compile for. There is a lot of documentation on flutter.dev about this.
 
 ### Flask API
 To set up the API, you will need to initialize a PostgreSQL database on an accessible server. There is a script in `wycorder-api/database` that will create the database structures for you that match the objects in the sqlalchemy objects.
