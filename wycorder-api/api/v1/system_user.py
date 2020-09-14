@@ -18,8 +18,8 @@ apiSystemUser = Blueprint('apiSystemUser', __name__, url_prefix='/api/v1/system_
 
 @apiSystemUser.route('/', methods=['GET'])
 def get():
-    user = db_session.query(SystemUser).filter(SystemUser.token == request.headers.get('token')).one()
-    if (user.system_user_id != None):
+    user = db_session.query(SystemUser).filter(SystemUser.token == request.headers.get('token')).first()
+    if (user != None):
         # Token matches
         
         db_session.close()
@@ -37,7 +37,7 @@ def get():
 @apiSystemUser.route('/auth', methods=['GET','POST'])
 def auth():
     user = db_session.query(SystemUser).filter(or_(SystemUser.sis_id == request.form['username'], SystemUser.email == request.form['username'])).first()
-    if (user.system_user_id != None):
+    if (user != None):
         # Check to see if password matches
         if (check_password_hash(user.password, request.form['password'])):
         
