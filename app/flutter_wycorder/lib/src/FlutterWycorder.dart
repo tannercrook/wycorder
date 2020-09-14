@@ -23,12 +23,12 @@ class FlutterWycorder {
       return user;
     } else if (response.statusCode == 403) {
       print('Access Denied');
-      throw Exception('Access Denied');
+      throw Exception('Incorrect Username/Password');
     } else {
       print('Error fetching data');
       print(body.toString());
       print(this.baseURL+'/system_user/auth'+' '+response.statusCode.toString());
-      throw Exception('Error fetching data');
+      throw Exception('Server Error: Contact system administrator.');
     }
   }
 
@@ -93,6 +93,8 @@ class FlutterWycorder {
   }
 
 }
+
+
 
 
 

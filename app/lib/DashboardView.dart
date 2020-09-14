@@ -54,7 +54,7 @@ class _DashboardViewState extends State<DashboardView> {
               } else {
                 latestStatus = 'Pass';
               }
-              return Dashboard(status: latestStatus, connection: 'Wycorder', readings: snapshot.data, user: this.widget.user, parent: this,);
+              return Dashboard(status: latestStatus, connection: 'WYcorder', readings: snapshot.data, user: this.widget.user, parent: this,);
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Text('Error Loading. Restart the application.');

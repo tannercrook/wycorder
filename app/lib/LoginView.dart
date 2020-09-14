@@ -19,12 +19,21 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     _initPrefs();
     return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Container( 
+      body: Container( child:Center(
+        child: Column(
+          children: [
+            Container(
               decoration: BoxDecoration(  
-                borderRadius: BorderRadius.circular(30),
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.only(topLeft:Radius.circular(15), topRight: Radius.circular(15))
+              ),
+              child: Center(
+                child: Text('Login', style: Theme.of(context).textTheme.headline3,),
+              )
+            ),
+            Container( 
+              decoration: BoxDecoration(  
+                borderRadius: BorderRadius.only(bottomLeft:Radius.circular(15), bottomRight: Radius.circular(15)),
                 color: Colors.grey[200],
               ),
               child: Form( 
@@ -69,9 +78,10 @@ class _LoginViewState extends State<LoginView> {
                 ),
               )
             )
-          )
-        ],
-      ),
+          ]
+        ),
+      )
+      )
     );
   }
 
@@ -85,22 +95,39 @@ class _LoginViewState extends State<LoginView> {
 
   void _submit() {
     _formKey.currentState.save();
-    // Disable the button
-    FlutterWycorder connection = FlutterWycorder(this.widget.baseURL);
-    SystemUser user = SystemUser();
-    connection.authenticate(this._data.username, this._data.password).then((value) {
-      user = value;
-      if (user.system_user_id != null) {
-        globals.user = user;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardView(title: 'Dashboard', user: user)));
-      } else {
-        // Something went wrong
-        print('Something went wrong logging in.');
-        setState(() {
-          this._submitIsDisabled = false;
+    // Check to make sure data is valid
+    if (this._data.username != '' || this._data.password != '') {
+      if (!this._data.username.contains('  ')) {
+        // Disable the button
+        FlutterWycorder connection = FlutterWycorder(this.widget.baseURL);
+        SystemUser user = SystemUser();
+        connection.authenticate(this._data.username, this._data.password).then((value) {
+          user = value;
+          if (user.system_user_id != null) {
+            globals.user = user;
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardView(title: 'Dashboard', user: user)));
+          } else {
+            // Something went wrong
+            print('Something went wrong logging in.');
+            setState(() {
+              this._submitIsDisabled = false;
+            });
+          }
+        }).catchError((err) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(err.message))
+          );
         });
+      } else {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Do not press tab in fields.'))
+      );
       }
-    }).catchError((err) => print(err));
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Please fill out all the fields.'))
+      );
+    }
   }
 
   Future<bool> _initPrefs() async {
