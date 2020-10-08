@@ -48,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(  
-                          hintText: 'email or ID',
+                          hintText: 'email or username',
                           labelText: 'Username'
                         ),
                         onSaved: (newValue) {
