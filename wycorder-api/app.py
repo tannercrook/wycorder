@@ -19,7 +19,7 @@ app.register_blueprint(apiSystemUser)
 
 @app.route('/test')
 def test():
-    return '<h1>You are live pardner!</h1>'
+    return '<h1>Flask is functioning.</h1>'
 
 
 @app.route('/testDB')
@@ -28,6 +28,6 @@ def testDB():
     if(user.system_user_id != None):
         return '<h1>DB Connected</h1>'
     else:
-        return '<h2>Uh Oh</h2>'
+        return '<h2>Error connecting to database.</h2>'
 
     
