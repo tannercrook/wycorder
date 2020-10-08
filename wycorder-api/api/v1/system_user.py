@@ -36,7 +36,7 @@ def get():
 
 @apiSystemUser.route('/auth', methods=['GET','POST'])
 def auth():
-    user = db_session.query(SystemUser).filter(or_(SystemUser.sis_id == request.form['username'], SystemUser.email == request.form['username'])).first()
+    user = db_session.query(SystemUser).filter(or_(SystemUser.sis_id == str(request.form['username']).lower(), SystemUser.email == str(request.form['username']).lower())).first()
     if (user != None):
         # Check to see if password matches
         if (check_password_hash(user.password, request.form['password'])):
