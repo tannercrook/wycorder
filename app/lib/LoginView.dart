@@ -19,8 +19,12 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     _initPrefs();
     return Scaffold(
-      body: Container( child:Center(
+      body: Container( 
+        padding: EdgeInsets.only(left: 25, right: 25),
+        child: Center(
         child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               decoration: BoxDecoration(  
@@ -29,6 +33,12 @@ class _LoginViewState extends State<LoginView> {
               ),
               child: Center(
                 child: Text('Login', style: Theme.of(context).textTheme.headline3,),
+              )
+            ),
+            Container( 
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              child: Center(
+                child: Text('Built by Tanner Crook'),
               )
             ),
             Container( 
@@ -66,7 +76,9 @@ class _LoginViewState extends State<LoginView> {
                         },
                       ),
                       Container( 
+                        margin: EdgeInsets.only(top: 10),
                         child: RaisedButton(
+                          color: Colors.blueAccent,
                           child: Text('Login'),
                           onPressed: () {
                             this._submit();

@@ -49,7 +49,9 @@ class FlutterWycorder {
 
 
   Future<List<Reading>> fetchReadings() async {
-    final response = await http.get(this.baseURL+'/reading/', headers: {'token':this.token});
+    print(this.baseURL+'/reading/');
+    final response = await http.get(this.baseURL+'/reading/', headers: {HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded",'token':this.token});
+    print(response.toString());
     if (response.statusCode == 200) {
       List<Reading> readings = (json.decode(response.body) as List).map((e) => Reading.fromJson(e)).toList();
       return readings;
