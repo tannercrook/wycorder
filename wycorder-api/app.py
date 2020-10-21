@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template 
 from flask_sqlalchemy import SQLAlchemy
 from models.DB import db_session
+from flask_cors import CORS
 
 from models.objects import SystemUser
 
@@ -10,6 +11,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '\xf2K\xed\xa3\x80r\x03\xd0\xbbv\xbc\x86)7\xbc[#\xf1\xcbT;b\xd6\x82'
 
 db = SQLAlchemy(app)
+
+# CORS
+CORS(app)
+
 
 # API Blueprints 
 from api.v1.reading import apiReading
